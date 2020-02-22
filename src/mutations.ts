@@ -4,7 +4,5 @@
  * Copyright © 2016-present Kriasoft | MIT License
  */
 
-export * from './user';
-export * from './identity';
-export * from './story';
-export * from './comment';
+export * from './users/mutations';
+export * from './story/mutations';

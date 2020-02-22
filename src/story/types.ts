@@ -15,8 +15,8 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import { UserType } from './user';
-import { CommentType } from './comment';
+import { UserType } from '../users/types';
+import { CommentType } from '../comment/types';
 import { nodeInterface } from '../node';
 import { dateField } from '../fields';
 import { Context } from '../context';

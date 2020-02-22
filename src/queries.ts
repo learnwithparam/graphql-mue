@@ -4,5 +4,5 @@
  * Copyright © 2016-present Kriasoft | MIT License
  */
 
-export * from './user';
-export * from './story';
+export * from './users/queries';
+export * from './story/queries';

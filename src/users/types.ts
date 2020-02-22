@@ -13,7 +13,7 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 
-import { IdentityType } from './identity';
+import { IdentityType } from '../identity/types';
 import { nodeInterface } from '../node';
 import { dateField } from '../fields';
 import { Context } from '../context';

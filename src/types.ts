@@ -4,5 +4,7 @@
  * Copyright © 2016-present Kriasoft | MIT License
  */
 
-export * from './user';
-export * from './story';
+export * from './users/types';
+export * from './identity/types';
+export * from './story/types';
+export * from './comment/types';

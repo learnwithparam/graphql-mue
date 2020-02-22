@@ -13,7 +13,7 @@ import {
   GraphQLString,
 } from 'graphql';
 
-import { UserType } from './user';
+import { UserType } from '../users/types';
 import { nodeInterface } from '../node';
 import { dateField } from '../fields';
 import { Context } from '../context';
