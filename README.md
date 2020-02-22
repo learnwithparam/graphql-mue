@@ -33,10 +33,12 @@ GraphQL API for Microhabit.
 ├── /scripts/                   # Build automation scripts and utilities
 ├── /seeds/                     # Scripts with reference/sample data
 ├── /src/                       # Node.js application source files
-│   ├── /mutations/             # GraphQL API mutations
-│   ├── /queries/               # GraphQL API query fields
-│   ├── /types/                 # GraphQL custom types
+│   ├── /users/                 # Module for domain specific for users
+│   ├── /story/                 # Module for domain specific for store
 │   ├── /utils/                 # Utility functions (mapTo, mapToMany etc.)
+│   ├── /mutations.ts           # GraphQL API mutations
+│   ├── /queries.ts             # GraphQL API query fields
+│   ├── /types.ts               # GraphQL custom types
 │   ├── /auth.js                # Authentication middleware
 │   ├── /context.ts             # Data loaders and other context-specific stuff
 │   ├── /db.ts                  # Database access and connection pooling (via Knex)
