@@ -33,3 +33,4 @@ backup.sql
 backup.*.sql
 
 .vscode
+.env
