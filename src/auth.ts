@@ -1,26 +1,55 @@
-/**
- * Node.js GraphQL API Starter Kit
- * https://github.com/kriasoft/nodejs-api-starter
- * Copyright © 2016-present Kriasoft | MIT License
- */
+import passport from 'passport';
+import { Strategy as GitHubStrategy } from 'passport-github2';
+import { Request, Response } from 'express';
 
-import jwt from 'express-jwt'
-import authorize from 'express-jwt-authz'
-import jwksRsa from 'jwks-rsa'
+const APP_ORIGIN = process.env.APP_ORIGIN;
+const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK_URL;
 
-const authenticate = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-  }),
-  audience: process.env.AUTH0_AUDIENCE,
-  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-  algorithms: ['RS256'],
-});
+const authenticate = () => {
+  const githubTokenStrategyCallback = (
+    accessToken: string,
+    refreshToken: string,
+    profile: string,
+    done: (
+      err: null,
+      value: { accessToken: string, refreshToken: string, profile: string },
+    ) => unknown,
+  ): unknown =>
+    done(null, {
+      accessToken,
+      refreshToken,
+      profile,
+    });
 
-export = {
-  authorize,
-  authenticate
-}
+  const strategy = new GitHubStrategy(
+    {
+      clientID: GITHUB_CLIENT_ID,
+      clientSecret: GITHUB_CLIENT_SECRET,
+      callbackURL: `${APP_ORIGIN}/${GITHUB_CALLBACK_URL}`,
+    },
+    githubTokenStrategyCallback,
+  );
+
+  passport.use(strategy);
+
+  return {
+    initialize: () => {
+      return passport.initialize();
+    },
+    authenticateGithub: (req: Request, res: Response): Promise<object> =>
+      new Promise((resolve, reject) => {
+        passport.authenticate(
+          'google-token',
+          { session: false },
+          (err: any, data: any, info: any) => {
+            if (err) reject(err);
+            resolve({ data, info });
+          },
+        )(req, res);
+      }),
+  };
+};
+
+export default authenticate();
