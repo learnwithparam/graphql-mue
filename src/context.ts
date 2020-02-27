@@ -10,7 +10,7 @@ import { Request } from 'express';
 import db from './db';
 import { Validator } from './validator';
 import { mapTo, mapToMany, mapToValues } from './utils';
-import { UnauthorizedError, ForbiddenError, ValidationError } from './errors';
+import { UnauthorizedError, ForbiddenError, ValidationError, CodeExpiredError } from './errors';
 
 export class Context {
   errors = [];
@@ -74,6 +74,17 @@ export class Context {
       transform(validator);
       return validator.validate();
     };
+  }
+
+  /**
+   * return or throw error getting access token
+   */
+  validateAccessToken(err: any, token: object) {
+    if (err) {
+      throw new CodeExpiredError(err);
+    }
+
+    return token
   }
 
   /*

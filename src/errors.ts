@@ -53,4 +53,14 @@ export class ForbiddenError extends Error {
   }
 }
 
+export class CodeExpiredError extends Error {
+  readonly code = 403;
+
+  constructor(message = 'Code is expired') {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+
 export default { report };
