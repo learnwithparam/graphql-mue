@@ -56,9 +56,7 @@ type Identity {
 }
 
 enum AuthenticationProvider {
-  GOOGLE
-  TWITTER
-  FACEBOOK
+  GITHUB
 }
 
 # A connection to a list of items.
@@ -135,6 +133,9 @@ type Mutation {
 
   # Marks the story as "liked".
   likeStory(input: LikeStoryInput!): LikeStoryPayload
+
+  # Generate access token for users base of different social login
+  socialLoginCallback(input: SocialLoginCallbackInput!): SocialLoginCallbackPayload
 }
 
 type UpdateUserPayload {
@@ -185,5 +186,19 @@ type LikeStoryPayload {
 
 input LikeStoryInput {
   id: ID!
+  clientMutationId: String
+}
+
+type SocialLoginCallbackPayload {
+  accessToken: String
+  refreshToken: String
+  tokenType: String
+  scope: String
+  clientMutationId: String
+}
+
+input SocialLoginCallbackInput {
+  code: String
+  provider: AuthenticationProvider
   clientMutationId: String
 }
