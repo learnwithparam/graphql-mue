@@ -9,3 +9,5 @@ export * from './relay';
 export * from './type';
 export * from './username';
 export * from './user';
+export * from './request';
+export * from './socialMedia';
