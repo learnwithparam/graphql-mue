@@ -9,6 +9,13 @@ import { GraphQLObjectType, GraphQLEnumType, GraphQLString } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 import { Context } from '../context';
 
+export const ProviderType = new GraphQLEnumType({
+  name: 'AuthenticationProvider',
+  values: {
+    GITHUB: { value: 'GITHUB' },
+  },
+})
+
 export const IdentityType = new GraphQLObjectType<any, Context, any>({
   name: 'Identity',
 
@@ -19,14 +26,7 @@ export const IdentityType = new GraphQLObjectType<any, Context, any>({
     ),
 
     provider: {
-      type: new GraphQLEnumType({
-        name: 'AuthenticationProvider',
-        values: {
-          GOOGLE: { value: 'google' },
-          TWITTER: { value: 'twitter' },
-          FACEBOOK: { value: 'facebook' },
-        },
-      }),
+      type: ProviderType,
       resolve: self => self.provider,
     },
 

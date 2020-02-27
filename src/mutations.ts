@@ -6,3 +6,4 @@
 
 export * from './users/mutations';
 export * from './story/mutations';
+export * from './identity/mutations';
