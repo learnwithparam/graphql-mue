@@ -5385,12 +5385,28 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+passport-github-token@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/passport-github-token/-/passport-github-token-2.2.0.tgz#3afbaef129cb0788e9a447c2e21d88e4ea752e54"
+  integrity sha512-7SwkHVnq2lZYsXTfnO2l0ejzE0YhJq6VUzQnVa4QUCLyuKQAsbsLpHdToyheEO4WtH4gjFVPAKd0EZPYMnMQkQ==
+  dependencies:
+    passport-oauth "1.0.0"
+
 passport-github2@0.1.11:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/passport-github2/-/passport-github2-0.1.11.tgz#c92b56f3c38a44e766aac7e9e7c1384c5e93c999"
   integrity sha1-yStW88OKROdmqsfp58E4TF6TyZk=
   dependencies:
     passport-oauth2 "1.x.x"
+
+passport-oauth1@1.x.x:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/passport-oauth1/-/passport-oauth1-1.1.0.tgz#a7de988a211f9cf4687377130ea74df32730c918"
+  integrity sha1-p96YiiEfnPRoc3cTDqdN8ycwyRg=
+  dependencies:
+    oauth "0.9.x"
+    passport-strategy "1.x.x"
+    utils-merge "1.x.x"
 
 passport-oauth2@1.x.x:
   version "1.5.0"
@@ -5402,6 +5418,14 @@ passport-oauth2@1.x.x:
     passport-strategy "1.x.x"
     uid2 "0.0.x"
     utils-merge "1.x.x"
+
+passport-oauth@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/passport-oauth/-/passport-oauth-1.0.0.tgz#90aff63387540f02089af28cdad39ea7f80d77df"
+  integrity sha1-kK/2M4dUDwIImvKM2tOep/gNd98=
+  dependencies:
+    passport-oauth1 "1.x.x"
+    passport-oauth2 "1.x.x"
 
 passport-strategy@1.x.x:
   version "1.0.0"
