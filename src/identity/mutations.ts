@@ -72,7 +72,7 @@ export const socialLoginCallback = mutationWithClientMutationId({
       },
     });
 
-    return ctx.validateAccessToken(error, {
+    return ctx.validAccessToken(error, {
       accessToken,
       refreshToken,
       tokenType,

@@ -79,7 +79,7 @@ export class Context {
   /**
    * return or throw error getting access token
    */
-  validateAccessToken(err: any, token: object) {
+  validAccessToken(err: any, token: object) {
     if (err) {
       throw new CodeExpiredError(err);
     }
