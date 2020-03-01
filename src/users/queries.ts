@@ -46,8 +46,9 @@ export const users = {
   args: forwardConnectionArgs,
 
   async resolve(root, args, ctx) {
-    // Only admins are allowed to fetch the list of users
-    ctx.ensureAuthorized(user => user.isAdmin);
+    await ctx.validateAccessToken();
+    // // // Only admins are allowed to fetch the list of users
+    // // ctx.ensureAuthorized(user => user.isAdmin);
 
     const query = db.table('users');
 

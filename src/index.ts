@@ -21,7 +21,7 @@ const port = process.env.PORT || 8080;
 
 export const api = Router();
 
-api.use(auth.initialize());
+// api.use(auth.initialize());
 
 if (process.env.APP_ENV !== 'production') {
   api.use('/graphql/model', voyager({ endpointUrl: '/graphql' }));
@@ -29,13 +29,12 @@ if (process.env.APP_ENV !== 'production') {
 
 api.use(
   '/graphql',
-  graphql(req => ({
+  graphql((req, res) => ({
     schema,
-    context: new Context(req),
+    context: new Context(req, res),
     graphiql: process.env.APP_ENV !== 'production',
     pretty: false,
     customFormatErrorFn: err => {
-      console.error(err.originalError || err);
       return {
         message: err.message,
         code: err.originalError && err.originalError.code,

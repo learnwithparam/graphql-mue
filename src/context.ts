@@ -5,19 +5,22 @@
  */
 
 import DataLoader from 'dataloader';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 import db from './db';
 import { Validator } from './validator';
 import { mapTo, mapToMany, mapToValues } from './utils';
 import { UnauthorizedError, ForbiddenError, ValidationError, CodeExpiredError } from './errors';
+import auth from './auth';
 
 export class Context {
   errors = [];
   private req: Request;
+  private res: Response;
 
-  constructor(req: Request) {
+  constructor(req: Request, res: Response) {
     this.req = req;
+    this.res = res;
 
     if (req.user) {
       // Add user object to the cache
@@ -85,6 +88,11 @@ export class Context {
     }
 
     return token
+  }
+
+  async validateAccessToken() {
+    const user = await auth.authenticateGithub(this.req, this.res)
+    return user
   }
 
   /*
