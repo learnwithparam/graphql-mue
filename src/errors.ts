@@ -63,4 +63,16 @@ export class CodeExpiredError extends Error {
 }
 
 
+export class InternalServerError extends Error {
+  readonly code = 500;
+
+  constructor(message = 'Internal server error') {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+
+
+
 export default { report };
