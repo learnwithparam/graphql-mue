@@ -27,12 +27,13 @@ export async function up(db: Knex): Promise<void> {
   await db.schema.createTable('identities', table => {
     table.uuid('id').notNullable().defaultTo(db.raw('uuid_generate_v4()')).primary();
     table.uuid('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE').onUpdate
-    table.enum('provider', ['google', 'github']);
+    table.enum('provider', ['GOOGLE', 'GITHUB']);
+    table.string('password', 120)
     table.string('provider_id', 100);
     table.string('profile_url', 250);
     table.string('time_zone', 50);
     table.timestamps(false, true);
-
+    table.unique(['user_id','provider']);
   });
 
   await db.schema.createTable('stories', table => {
