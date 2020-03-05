@@ -90,9 +90,8 @@ export class Context {
     return token
   }
 
-  async validateAccessToken() {
-    const user = await auth.authenticateGithub(this.req, this.res)
-    return user
+  async validateLogin() {
+    return auth.authenticate(this.req, this.res)
   }
 
   /*
