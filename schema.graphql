@@ -136,6 +136,9 @@ type Mutation {
 
   # Generate access token for users base of different social login
   socialLoginCallback(input: SocialLoginCallbackInput!): SocialLoginCallbackPayload
+
+  # Authenticate user using access token provided from calling callback and upsert identity.
+  authenticateSocialLogin(input: AuthenticateSocialLoginInput!): AuthenticateSocialLoginPayload
 }
 
 type UpdateUserPayload {
@@ -199,6 +202,16 @@ type SocialLoginCallbackPayload {
 
 input SocialLoginCallbackInput {
   code: String
+  provider: AuthenticationProvider
+  clientMutationId: String
+}
+
+type AuthenticateSocialLoginPayload {
+  user: User
+  clientMutationId: String
+}
+
+input AuthenticateSocialLoginInput {
   provider: AuthenticationProvider
   clientMutationId: String
 }

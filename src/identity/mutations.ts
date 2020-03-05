@@ -13,7 +13,10 @@ import {
   GraphQLBoolean,
 } from 'graphql';
 
+import { InternalServerError } from '../errors';
 import { handleSocialLogin } from '../utils';
+import { UserType } from '../users/types';
+import { registerUser } from '../users/repository';
 
 import { ProviderType } from './types';
 
@@ -72,11 +75,72 @@ export const socialLoginCallback = mutationWithClientMutationId({
       },
     });
 
+    //
+
     return ctx.validAccessToken(error, {
       accessToken,
       refreshToken,
       tokenType,
       scope,
     });
+  },
+});
+
+export const authenticateSocialLogin = mutationWithClientMutationId({
+  name: 'AuthenticateSocialLogin',
+  description:
+    'Authenticate user using access token provided from calling callback and upsert identity.',
+
+  inputFields: {
+    provider: {
+      type: ProviderType,
+    },
+  },
+
+  outputFields: {
+    user: {
+      type: UserType,
+    },
+  },
+
+  async mutateAndGetPayload(input, ctx) {
+    // Validate and sanitize user input
+    const data = await ctx.validate(
+      input,
+      'update',
+    )(x => x.field('provider', { as: 'provider' }).isLength({ min: 3 }));
+
+    if (input.validateOnly) {
+      return { accessToken: null, refreshToken: null };
+    }
+
+    const parsedToken = await ctx.validateLogin();
+    const {
+      data: { username, displayName, _json },
+    } = parsedToken;
+    const { id, html_url: htmlUrl, avatar_url: avatarUrl, email } = _json;
+
+    try {
+      const user = await registerUser({
+        user: {
+          username: username,
+          email,
+          display_name: displayName,
+          photo_url: avatarUrl,
+        },
+        identity: {
+          provider_id: id,
+          profile_url: htmlUrl,
+          provider: input.provider,
+        },
+      });
+
+      return {
+        user,
+      };
+    } catch (err) {
+      console.log(err.toString());
+      throw new InternalServerError(err.toString());
+    }
   },
 });
