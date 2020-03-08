@@ -31,10 +31,8 @@ export const UserType = new GraphQLObjectType<any, Context, any>({
 
     email: {
       type: GraphQLString,
-      resolve(self, args, ctx) {
-        return ctx.user && (ctx.user.id === self.id || ctx.user.isAdmin)
-          ? self.email
-          : null;
+      resolve(self) {
+        return self.email
       },
     },
 

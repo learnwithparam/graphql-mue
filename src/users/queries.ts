@@ -31,7 +31,8 @@ export const user = {
     username: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  resolve(root, { username }, ctx) {
+  async resolve(root, { username }, ctx) {
+    await ctx.validateLogin();
     return ctx.userByUsername.load(username);
   },
 };
@@ -46,7 +47,7 @@ export const users = {
   args: forwardConnectionArgs,
 
   async resolve(root, args, ctx) {
-    await ctx.validateAccessToken();
+    await ctx.validateLogin();
     // // // Only admins are allowed to fetch the list of users
     // // ctx.ensureAuthorized(user => user.isAdmin);
 
