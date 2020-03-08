@@ -9,7 +9,7 @@ import { Request, Response } from 'express';
 
 import db from './db';
 import { Validator } from './validator';
-import { mapTo, mapToMany, mapToValues } from './utils';
+import { mapTo, mapToMany, mapToValues, isValidUsername } from './utils';
 import { UnauthorizedError, ForbiddenError, ValidationError, CodeExpiredError } from './errors';
 import auth from './auth';
 
@@ -91,7 +91,12 @@ export class Context {
   }
 
   async validateLogin() {
-    return auth.authenticate(this.req, this.res)
+    const user = await auth.authenticate(this.req, this.res) || {}
+    if (!user.data) {
+      throw new UnauthorizedError()
+    }
+
+    return user
   }
 
   /*
