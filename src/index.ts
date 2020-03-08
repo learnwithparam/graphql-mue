@@ -13,15 +13,12 @@ import express, { Router, Request, Response } from 'express';
 
 dotenv.config({ path: '.env' });
 
-import auth from './auth';
 import schema from './schema';
 import { Context } from './context';
 
 const port = process.env.PORT || 8080;
 
 export const api = Router();
-
-// api.use(auth.initialize());
 
 if (process.env.APP_ENV !== 'production') {
   api.use('/graphql/model', voyager({ endpointUrl: '/graphql' }));
