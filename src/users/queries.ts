@@ -14,7 +14,7 @@ import {
 
 import db from '../db';
 import { countField } from '../fields';
-import { UserType } from '../types';
+import { UserType } from './types';
 
 export const me = {
   type: UserType,
