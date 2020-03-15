@@ -8,32 +8,16 @@ export async function up(db: Knex): Promise<any> {
       .defaultTo(db.raw('uuid_generate_v4()'))
       .primary();
 
-    table
-      .uuid('user_id', 50)
-      .notNullable()
-      .references('id')
-      .inTable('users')
-      .onDelete('CASCADE').onUpdate;
-
     table.text('content');
 
-    table
-      .jsonb('tags')
-      .notNullable()
-      .defaultTo('{}');
-
-    table
-      .uuid('parent_id', 50)
-      .notNullable()
-      .references('id')
-      .inTable('habits')
-      .onDelete('CASCADE').onUpdate;
+    table.specificType('tags', 'TEXT ARRAY');
 
     table
       .uuid('created_by', 50)
       .notNullable()
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE').onUpdate;
 
     table
       .uuid('updated_by', 50)
