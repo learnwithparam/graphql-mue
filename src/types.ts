@@ -8,3 +8,4 @@ export * from './users/types';
 export * from './identity/types';
 export * from './story/types';
 export * from './comment/types';
+export * from './habits/types';

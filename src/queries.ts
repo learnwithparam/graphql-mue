@@ -6,3 +6,4 @@
 
 export * from './users/queries';
 export * from './story/queries';
+export * from './habits/queries';

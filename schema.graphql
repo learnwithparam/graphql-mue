@@ -21,6 +21,8 @@ type Root {
   users(after: String, first: Int): UserConnection
   story(slug: String!): Story
   stories: [Story]
+  habit(id: String!, content: String!): Habit
+  habits: [Habit]
 }
 
 # An object with an ID
@@ -117,6 +119,17 @@ type Comment implements Node {
   comments: [Comment]
   text: String
   pointsCount: Int!
+  createdAt(format: String): String
+  updatedAt(format: String): String
+}
+
+type Habit implements Node {
+  # The ID of an object
+  id: ID!
+  content: String!
+  tags: [String]
+  createdBy: User!
+  updatedBy: User!
   createdAt(format: String): String
   updatedAt(format: String): String
 }
