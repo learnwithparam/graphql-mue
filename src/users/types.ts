@@ -14,6 +14,7 @@ import {
 } from 'graphql';
 
 import { IdentityType } from '../identity/types';
+import { HabitType } from '../habits/types';
 import { nodeInterface } from '../node';
 import { dateField } from '../fields';
 import { Context } from '../context';
@@ -61,6 +62,13 @@ export const UserType = new GraphQLObjectType<any, Context, any>({
       type: new GraphQLList(IdentityType),
       resolve(self, args, ctx) {
         return ctx.identitiesByUserId.load(self.id);
+      },
+    },
+
+    habits: {
+      type: new GraphQLList(HabitType),
+      resolve(self, args, ctx) {
+        return ctx.habitsByUserId.load(self.id);
       },
     },
 
