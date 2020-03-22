@@ -133,10 +133,26 @@ export class Context {
 
   identitiesByUserId = new DataLoader(keys =>
     db
-      .table('user_identities')
+      .table('identities')
       .whereIn('user_id', keys as string[])
       .select()
       .then(mapToMany(keys, (x: any) => x.user_id)),
+  );
+
+  habitsById = new DataLoader(keys =>
+    db
+      .table('habits')
+      .whereIn('id', keys as string[])
+      .select()
+      .then(mapTo(keys, (x: any) => x.id)),
+  );
+
+  habitsByUserId = new DataLoader(keys =>
+    db
+      .table('habits')
+      .whereIn('created_by', keys as string[])
+      .select()
+      .then(mapToMany(keys, (x: any) => x.created_by)),
   );
 
   storyById = new DataLoader(keys =>

@@ -14,27 +14,11 @@ export const habit = {
 
   args: {
     id: { type: new GraphQLNonNull(GraphQLString) },
-    content: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  async resolve(root, { id, content }, ctx) {
-    let story = await db
-      .table('habits')
-      .where({ id })
-      .first();
-
-    // Attempts to find a story by partial ID contained in the slug.
-    if (!story) {
-      const match = content.match(/[a-f0-9]{7}$/);
-      if (match) {
-        story = await db
-          .table('habits')
-          .whereRaw(`content::text LIKE '%${match[0]}'`)
-          .first();
-      }
-    }
-
-    return story;
+  async resolve(root, { id }, ctx) {
+    await ctx.validateLogin();
+    return ctx.habitsById.load(id);
   },
 };
 
