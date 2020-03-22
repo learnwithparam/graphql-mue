@@ -13,7 +13,6 @@ import { Context } from './context';
 export const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
   (globalId, context: Context) => {
     const { type, id } = fromGlobalId(globalId);
-
     switch (type) {
       case 'User':
         return context.userById.load(id).then(assignType('User'));
@@ -21,6 +20,8 @@ export const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
         return context.storyById.load(id).then(assignType('Story'));
       case 'Comment':
         return context.commentById.load(id).then(assignType('Comment'));
+      case 'Habit':
+        return context.habitsById.load(id).then(assignType('Habit'));
       default:
         return null;
     }
@@ -33,6 +34,8 @@ export const { nodeInterface, nodeField, nodesField } = nodeDefinitions(
         return require('./types').StoryType;
       case 'Comment':
         return require('./types').CommentType;
+      case 'Habit':
+        return require('./types').HabitType;
       default:
         return null;
     }

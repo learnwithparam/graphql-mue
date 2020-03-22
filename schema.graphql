@@ -21,7 +21,7 @@ type Root {
   users(after: String, first: Int): UserConnection
   story(slug: String!): Story
   stories: [Story]
-  habit(id: String!, content: String!): Habit
+  habit(id: String!): Habit
   habits: [Habit]
 }
 
@@ -40,6 +40,7 @@ type User implements Node {
   photoURL: String
   timeZone: String
   identities: [Identity]
+  habits: [Habit]
   isAdmin: Boolean
   createdAt(format: String): String
   updatedAt(format: String): String
@@ -59,6 +60,15 @@ type Identity {
 
 enum AuthenticationProvider {
   GITHUB
+}
+
+type Habit implements Node {
+  # The ID of an object
+  id: ID!
+  content: String!
+  tags: [String]
+  createdAt(format: String): String
+  updatedAt(format: String): String
 }
 
 # A connection to a list of items.
@@ -119,17 +129,6 @@ type Comment implements Node {
   comments: [Comment]
   text: String
   pointsCount: Int!
-  createdAt(format: String): String
-  updatedAt(format: String): String
-}
-
-type Habit implements Node {
-  # The ID of an object
-  id: ID!
-  content: String!
-  tags: [String]
-  createdBy: User!
-  updatedBy: User!
   createdAt(format: String): String
   updatedAt(format: String): String
 }
