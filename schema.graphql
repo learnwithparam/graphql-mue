@@ -67,6 +67,8 @@ type Habit implements Node {
   id: ID!
   content: String!
   tags: [String]
+  createdBy: User
+  updatedBy: User
   createdAt(format: String): String
   updatedAt(format: String): String
 }

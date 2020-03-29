@@ -12,6 +12,7 @@ import {
   GraphQLString,
 } from 'graphql';
 
+import { UserType } from '../users/types'
 import { nodeInterface } from '../node';
 import { dateField } from '../fields';
 import { Context } from '../context';
@@ -20,7 +21,7 @@ export const HabitType = new GraphQLObjectType<any, Context, any>({
   name: 'Habit',
   interfaces: [nodeInterface],
 
-  fields: {
+  fields: () => ({
     id: globalIdField(),
 
     content: {
@@ -33,22 +34,22 @@ export const HabitType = new GraphQLObjectType<any, Context, any>({
 
     // Need to search it's causing circular reference
     // for our usecase we don't need to fetch all the habits only habits per user.
-    // createdBy: {
-    //   type: new GraphQLNonNull(UserType),
-    //   resolve(self, args, ctx) {
-    //     return ctx.userById.load(self.created_by);
-    //   },
-    // },
+    createdBy: {
+      type: UserType,
+      resolve(self, args, ctx) {
+        return ctx.userById.load(self.created_by);
+      },
+    },
 
-    // updatedBy: {
-    //   type: new GraphQLNonNull(UserType),
-    //   resolve(self, args, ctx) {
-    //     return ctx.userById.load(self.updated_by);
-    //   },
-    // },
+    updatedBy: {
+      type: UserType,
+      resolve(self, args, ctx) {
+        return ctx.userById.load(self.updated_by);
+      },
+    },
 
 
     createdAt: dateField((self: any) => self.created_at),
     updatedAt: dateField((self: any) => self.updated_at),
-  },
+  }),
 });
