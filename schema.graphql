@@ -153,6 +153,12 @@ type Mutation {
 
   # Authenticate user using access token provided from calling callback and upsert identity.
   authenticateSocialLogin(input: AuthenticateSocialLoginInput!): AuthenticateSocialLoginPayload
+
+  # Creates a habit.
+  createHabit(input: CreateHabitInput!): CreateHabitPayload
+
+  # Updates a habit.
+  updateHabit(input: UpdateHabitInput!): UpdateHabitPayload
 }
 
 type UpdateUserPayload {
@@ -227,5 +233,28 @@ type AuthenticateSocialLoginPayload {
 
 input AuthenticateSocialLoginInput {
   provider: AuthenticationProvider
+  clientMutationId: String
+}
+
+type CreateHabitPayload {
+  habit: Habit
+  clientMutationId: String
+}
+
+input CreateHabitInput {
+  content: String
+  tags: [String]
+  clientMutationId: String
+}
+
+type UpdateHabitPayload {
+  habit: Habit
+  clientMutationId: String
+}
+
+input UpdateHabitInput {
+  id: ID!
+  content: String
+  tags: [String]
   clientMutationId: String
 }
