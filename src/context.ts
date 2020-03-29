@@ -96,7 +96,7 @@ export class Context {
       throw new UnauthorizedError()
     }
 
-    return user
+    return this.userByUsername.load(user.data.username)
   }
 
   /*
