@@ -27,7 +27,7 @@
     "jwks-rsa": "1.7.0",
     "knex": "^0.20.8",
     "moment-timezone": "^0.5.27",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.7",
     "passport": "0.4.1",
     "passport-github-token": "2.2.0",
     "passport-github2": "0.1.11",
